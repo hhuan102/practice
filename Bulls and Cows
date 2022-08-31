@@ -1,0 +1,29 @@
+class Solution {
+public:
+    string getHint(string secret, string guess) {
+        int secret_map[256] ;
+        memset(secret_map,0,sizeof(secret_map));
+        for(auto c:secret){
+            secret_map[c]++;
+        }
+        int acnt = 0,bcnt =0;
+        int gsize = guess.size();
+        int ssize = secret.size();
+        for(int i=0;i<gsize && i<ssize;i++){
+            if(guess[i] == secret[i]){
+                acnt++;
+                secret_map[guess[i]]--;
+            }
+        }
+        for(int i=0;i<gsize && i<ssize;i++){
+            if(guess[i] != secret[i] && secret_map[guess[i]]!=0){
+                bcnt++;
+                secret_map[guess[i]]--;
+            }
+        }
+        string res;
+        ostringstream oss(res);
+        oss<<acnt<<"A"<<bcnt<<"B";
+        return oss.str();
+    }
+};
